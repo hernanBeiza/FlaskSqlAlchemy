@@ -19,7 +19,7 @@ def guardar():
 	usuario = request.form.get("usuario")
 	contrasena = request.form.get("contrasena")
 	enviar = True
-	mensajes = "Te faltó"
+	mensajes = "Te falta"
 	if(nombre==None):
 		enviar = False
 		mensajes +="Nombre"
@@ -31,7 +31,7 @@ def guardar():
 		mensajes +="Usuario"
 	if(contrasena==None):
 		enviar = False
-		mensajes +="Contraseña"
+		mensajes +="Contrasena"
 
 	if(enviar):
 		usuarioVO = UsuarioVO()
@@ -54,7 +54,7 @@ def editar(idusuario):
 	contrasena = request.form.get("contrasena")
 	valid = request.form.get("valid")
 	enviar = True
-	mensajes = "Te faltó"
+	mensajes = "Te falto"
 	if(nombre==None):
 		enviar = False
 		mensajes +="Nombre"
@@ -66,7 +66,7 @@ def editar(idusuario):
 		mensajes +="Usuario"
 	if(contrasena==None):
 		enviar = False
-		mensajes +="Contraseña"
+		mensajes +="Contrasena"
 	if(valid==None):
 		enviar = False
 		mensajes +="Valid"

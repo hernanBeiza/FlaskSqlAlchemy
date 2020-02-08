@@ -3,9 +3,9 @@
 
 ## Necesario
 
-- python2 o 3
+- python3
 - python venv
-- pip
+- pip3
 - flask
 - flask-sqlalchemy
 - marshmallow-sqlalchemy
@@ -13,6 +13,12 @@
 - termcolor
 
 ## Instalar dependencias
+
+## PIP para Python 3
+
+``
+sudo apt install python3-pip
+``
 
 ## Instalar virtualenv en ubuntu
 
@@ -23,7 +29,7 @@ sudo apt-get install python-virtualenv
 ## Configurar Activar módulo de env
 
 ``
-python2 -m virtualenv venv
+python -m virtualenv venv
 ``
 
 ## Activar ambiente
@@ -53,6 +59,10 @@ pip install flask-sqlalchemy
 
 ``
 pip install -U flask-sqlalchemy marshmallow-sqlalchemy
+``
+
+``
+pip install flask-marshmallow
 ``
 
 ### Listar dependencias instaladas
@@ -87,9 +97,9 @@ flask run
 ### Opción 2
 
 ```
-	export FLASK_APP=app.py
-	export FLASK_ENV=development
- flask run --host localhost --port 3000
+export FLASK_APP=app.py
+export FLASK_ENV=development
+flask run --host localhost --port 3000
 ```
 
 ```
