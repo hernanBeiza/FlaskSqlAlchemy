@@ -12,13 +12,15 @@ class UsuarioDAO():
 
 	@staticmethod
 	def guardar(usuarioVO):
-		usuario = Usuario(None,usuarioVO.nombre, usuarioVO.apellido, usuarioVO.usuario, usuarioVO.contrasena, 2)
+		print(colored("UsuarioService: guardar(); {}".format(usuarioVO.usuario), 'yellow'))
+		usuario = Usuario(None, usuarioVO.nombre, usuarioVO.apellido, usuarioVO.usuario, usuarioVO.contrasena, 2, [])
 		db.session.add(usuario)
 		result=True
 		mensajes="Usuario guardado correctamente"
 		try:
 			db.session.commit()
-			usuario = Usuario.query.get(usuario.idusuario)
+			print(colored("UsuarioService: usuario guardado correctamente", 'yellow'))
+			#usuario = Usuario.query.get(usuario.idusuario)
 		except Exception as e:
 			print (e)
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
@@ -31,7 +33,18 @@ class UsuarioDAO():
 		return respuesta
 
 	@staticmethod
+	def obtener(pagina):
+		print(colored("UsuarioService: obtener();", 'yellow'))
+		return Usuario.query.paginate(pagina,int(totalPorPagina), False).items
+
+	@staticmethod
+	def obtenerConID(idUsuario):
+		print(colored("UsuarioService: obtenerConID(); {}".format(idUsuario), 'yellow'))
+		return Usuario.query.get(idUsuario)
+
+	@staticmethod
 	def editar(usuarioVO):
+		print(colored("UsuarioService: editar(); {}".format(usuarioVO.idusuario), 'yellow'))
 		result=True
 		mensajes="Usuario editado correctamente"
 		try:
@@ -55,14 +68,16 @@ class UsuarioDAO():
 		return respuesta
 
 	@staticmethod
-	def eliminar(idusuario):
-		result=True
-		mensajes="Usuario eliminado correctamente"
-		usuario = Usuario.query.get(idusuario)
+	def eliminar(idUsuario):
+		result = True
+		mensajes = "Usuario con id {} eliminado correctamente".format(idUsuario)
+		usuario = Usuario.query.get(idUsuario)
 		if(usuario is not None):
 			try:
-					db.session.delete(usuario)
-					db.session.commit()
+				db.session.delete(usuario)
+				db.session.commit()
+				respuesta = {"result":result,"mensajes":mensajes}
+				return respuesta
 			except Exception as e:
 				print (e)
 				#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
@@ -70,35 +85,10 @@ class UsuarioDAO():
 				# for resetting non-commited .add()
 				db.session.flush()
 				result=False
-				mensajes="El usuario no se pudo eliminar"
+				mensajes="El usuario con id {} no se pudo eliminar".format(idUsuario)
 		else:
 			result=False
-			mensajes="El usuario no se ha podido encontrar"
+			mensajes="El usuario con id {} no se ha podido encontrar".format(idUsuario)
 
-		respuesta = {"result":result,"mensajes":mensajes}
-		return respuesta
-
-	@staticmethod
-	def obtener(pagina):
-		result = True
-		mensajes = "Usuarios encontrados correctamente"
-		totalPorPagina = 2
-		usuariosEncontrados = Usuario.query.paginate(pagina,int(totalPorPagina), False).items
-
-		if(len(usuariosEncontrados)==0):
-			result=False
-			mensajes="No se han encontrado usuarios"
-
-		respuesta = {"result":result,"mensajes":mensajes, "usuarios":usuariosEncontrados}
-		return respuesta
-
-	@staticmethod
-	def obtenerConID(idusuario):
-		result = True
-		mensajes = "Usuarios encontrados correctamente"
-		usuarioEncontrado = Usuario.query.get(idusuario)
-		if(usuarioEncontrado is None):
-			result = False
-			mensajes = "El usuario no ha sido encontrado con ese id"
-		respuesta = {"result":result,"mensajes":mensajes, "usuario":usuarioEncontrado}
+		respuesta = {"result":result,"errores":mensajes}
 		return respuesta
