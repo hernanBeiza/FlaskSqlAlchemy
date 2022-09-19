@@ -1,11 +1,17 @@
 from flask_dotenv import DotEnv
+from termcolor import colored
 
 class Config:
 
-	@classmethod
-	def init_app(self, app):
-		print("Config: init_app")
-		print(app.config)
+	@staticmethod
+	def init_app(app):
+		#print("Config: init_app")
+		#Configuracion de Flask
+		print(colored("Iniciar configuración de Flash", 'yellow'))
+		app.config['JSON_SORT_KEYS'] = False
+		#Variables de ambiente
 		env = DotEnv()
-		env.init_app(app, env_file="development.env", verbose_mode=True)
-		print(app.config)
+		ruta = "src/config/development.env"
+		print(colored("Cargar archivo según ambiente {}".format(ruta), 'yellow'))
+		env.init_app(app, env_file=ruta, verbose_mode=True)
+		

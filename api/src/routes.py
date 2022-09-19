@@ -6,8 +6,7 @@ from flask import Blueprint
 from app import app;
 """
 
-print("routes iniciar();")
-
+from .Controllers.TareaController import *
 from .Controllers.UsuarioController import *
 from .Controllers.IndexController import *
 
