@@ -1,6 +1,11 @@
-from ..app import db
+from flask import request
+from flask import escape
+from flask import json
+from flask import jsonify
+from flask import Blueprint
 
 from termcolor import colored
+from ..app import db
 
 from ..DAOS.Models.Tarea import Tarea
 from ..DAOS.Schemas.TareaSchema import TareaSchema
@@ -16,13 +21,29 @@ class TareaService():
 	"""
 	
 	@staticmethod
-	def guardar(tareaVO):
-		print(colored("TareaService: guardar(); {}".format(tareaVO.idusuario), 'cyan'))
-		respuesta = TareaDAO.guardar(tareaVO)
-		print(colored(respuesta, 'cyan'))
-		if(respuesta["result"]):
+	def guardar(request):
+		print(colored("TareaService: guardar(); {}".format(request.form), 'cyan'))
+		titulo = request.form.get("titulo")
+		idUsuario = request.form.get("idUsuario")
+		enviar = True
+		mensajes = "Te falta:"
+		if(titulo==None):
+			enviar = False
+			mensajes +="\nTítulo"
+		if(idUsuario==None):
+			enviar = False
+			mensajes +="\nid de usuario"
+
+		if(enviar):
+			tareaVO = TareaVO()
+			tareaVO.titulo = titulo
+			tareaVO.idusuario = idUsuario
+			respuesta = TareaDAO.guardar(tareaVO)
+			print(colored(respuesta, 'cyan'))
 			tarea = TareaSchema().dump(respuesta["tarea"])
 			respuesta["tarea"] = tarea
+		else:
+			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
 
 	@staticmethod
@@ -90,13 +111,41 @@ class TareaService():
 		return data
 
 	@staticmethod
-	def editar(tareaVO):
-		print(colored("TareaService: editar(); {}".format(tareaVO.idtarea), 'cyan'))
-		respuesta = TareaDAO.editar(tareaVO)
-		print(colored(respuesta, 'cyan'))
-		if(respuesta["result"]):
-			tarea = TareaSchema().dump(respuesta["tarea"])
-			respuesta["tarea"] = tarea
+	def editar(request):
+		print(colored("TareaService: editar(); {}".format(request.form), 'cyan'))
+		titulo = request.form.get("titulo")
+		idUsuario = request.form.get("idUsuario")
+		valid = request.form.get("valid")
+		idTarea = request.form.get("idTarea")
+		enviar = True
+		mensajes = "Te faltó:"
+		if(titulo==None):
+			enviar = False
+			mensajes +="\nTítulo"
+		if(idUsuario==None):
+			enviar = False
+			mensajes +="\nidUsuario"
+		if(idTarea==None):
+			enviar = False
+			mensajes +="\nID de la tarea a editar"
+		if(valid==None):
+			enviar = False
+			mensajes +="\nValid"
+
+		if(enviar):
+			tareaVO = TareaVO()
+			tareaVO.idtarea = idTarea
+			tareaVO.idusuario = idUsuario
+			tareaVO.titulo = titulo
+			tareaVO.valid = valid
+			respuesta = TareaDAO.editar(tareaVO)
+			print(colored(respuesta, 'cyan'))
+			if(respuesta["result"]):
+				tarea = TareaSchema().dump(respuesta["tarea"])
+				respuesta["tarea"] = tarea
+		else:
+			return {"result":False, "errores":mensajes}
+
 		return respuesta
 
 	@staticmethod

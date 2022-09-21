@@ -147,7 +147,7 @@ flask run --host localhost --port 3000
 - Todo en una línea
 
 ```bash
-FLASK_APP=app.py FLASK_ENV=development flask run --host localhost --port 3000
+FLASK_APP=src/app.py FLASK_ENV=development flask run --host localhost --port 3000
 ```
 
 ## Comandos útiles PIP

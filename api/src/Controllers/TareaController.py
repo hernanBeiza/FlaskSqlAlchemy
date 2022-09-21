@@ -18,26 +18,7 @@ class TareaController():
 	@tareaBluePrint.route('', methods=['POST'])
 	def guardar():
 		print(colored("TareaController: guardar()", 'green'))
-		titulo = request.form.get("nombre")
-		idUsuario = request.form.get("idUsuario")
-		enviar = True
-		mensajes = "Te falta:"
-		if(titulo==None):
-			enviar = False
-			mensajes +="\nTítulo"
-		if(idUsuario==None):
-			enviar = False
-			mensajes +="\nid de usuario"
-
-		if(enviar):
-			tareaVO = TareaVO()
-			tareaVO.titulo = titulo
-			tareaVO.idusuario = idUsuario
-			respuesta = TareaService.guardar(tareaVO)
-		else:
-			respuesta = {"result":False, "errores":mensajes}
-
-		return respuesta
+		return TareaService.guardar(request)
 
 	@tareaBluePrint.route('/', methods=['GET'])
 	def obtener():
@@ -62,31 +43,7 @@ class TareaController():
 
 	@tareaBluePrint.route('/<int:idTarea>', methods=['PUT'])
 	def editar(idTarea):
-		print(colored("TareaController: editar() {}".format(idTarea), 'green'))
-		titulo = request.form.get("titulo")
-		idUsuario = request.form.get("idUsuario")
-		valid = request.form.get("valid")
-		enviar = True
-		mensajes = "Te faltó:"
-		if(titulo==None):
-			enviar = False
-			mensajes +="\nTítulo"
-		if(idUsuario==None):
-			enviar = False
-			mensajes +="\nidUsuario"
-		if(valid==None):
-			enviar = False
-			mensajes +="\nValid"
-
-		if(enviar):
-			tareaVO = TareaVO()
-			tareaVO.idtarea = idTarea
-			tareaVO.idusuario = idUsuario
-			tareaVO.titulo = titulo
-			tareaVO.valid = valid
-			return TareaService.editar(tareaVO)
-		else:
-			return {"result":False, "errores":mensajes}
+		return TareaService.editar(request)
 
 	@tareaBluePrint.route('/<int:idTarea>', methods=['DELETE'])
 	def eliminar(idTarea):

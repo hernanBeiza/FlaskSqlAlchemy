@@ -17,37 +17,8 @@ class UsuarioController():
 
 	@usuarioBluePrint.route('', methods=['POST'])
 	def guardar():
-		print(colored("UsuarioController: guardar()", 'green'))
-		nombre = request.form.get("nombre")
-		apellido = request.form.get("apellido")
-		usuario = request.form.get("usuario")
-		contrasena = request.form.get("contrasena")
-		enviar = True
-		mensajes = "Te falta:"
-		if(nombre==None):
-			enviar = False
-			mensajes +="\nNombre"
-		if(apellido==None):
-			enviar = False
-			mensajes +="\nApellido"
-		if(usuario==None):
-			enviar = False
-			mensajes +="\nUsuario"
-		if(contrasena==None):
-			enviar = False
-			mensajes +="\nContrasena"
-
-		if(enviar):
-			usuarioVO = UsuarioVO()
-			usuarioVO.nombre = nombre
-			usuarioVO.apellido = apellido
-			usuarioVO.usuario = usuario
-			usuarioVO.contrasena = contrasena
-			respuesta = UsuarioService.guardar(usuarioVO)
-		else:
-			respuesta = {"result":False, "errores":mensajes}
-
-		return respuesta
+		print(colored("UsuarioController: guardar() {}".format(request.form), 'green'))
+		return UsuarioService.guardar(request)
 
 	@usuarioBluePrint.route('/', methods=['GET'])
 	def obtener(pagina):
@@ -62,43 +33,9 @@ class UsuarioController():
 
 	@usuarioBluePrint.route('/<int:idUsuario>', methods=['PUT'])
 	def editar(idUsuario):
-		print(colored("UsuarioController: editar() {}".format(idUsuario), 'green'))
-		nombre = request.form.get("nombre")
-		apellido = request.form.get("apellido")
-		usuario = request.form.get("usuario")
-		contrasena = request.form.get("contrasena")
-		valid = request.form.get("valid")
-		enviar = True
-		mensajes = "Te faltó:"
-		if(nombre==None):
-			enviar = False
-			mensajes +="\nNombre"
-		if(apellido==None):
-			enviar = False
-			mensajes +="\nApellido"
-		if(usuario==None):
-			enviar = False
-			mensajes +="\nUsuario"
-		if(contrasena==None):
-			enviar = False
-			mensajes +="\nContrasena"
-		if(valid==None):
-			enviar = False
-			mensajes +="\nValid"
-
-		if(enviar):
-			usuarioVO = UsuarioVO()
-			usuarioVO.idusuario = idUsuario
-			usuarioVO.nombre = nombre
-			usuarioVO.apellido = apellido
-			usuarioVO.usuario = usuario
-			usuarioVO.contrasena = contrasena
-			usuarioVO.valid = valid
-			respuesta = UsuarioService.editar(usuarioVO)
-		else:
-			respuesta = {"result":False, "errores":mensajes}
-		return jsonify(respuesta)
-
+		print(colored("UsuarioController: editar() {}".format(request.form), 'green'))
+		return UsuarioService.editar(request)
+		
 	@usuarioBluePrint.route('/<int:idUsuario>', methods=['DELETE'])
 	def eliminar(idUsuario):
 		print(colored("UsuarioController: eliminar() {}".format(idUsuario), 'green'))
