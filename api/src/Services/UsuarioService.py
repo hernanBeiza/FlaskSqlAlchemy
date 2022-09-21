@@ -1,6 +1,12 @@
-from ..app import db
+from flask import request
+from flask import escape
+from flask import json
+from flask import jsonify
+from flask import Blueprint
 
 from termcolor import colored
+
+from ..app import db
 
 from ..DAOS.Models.Usuario import Usuario
 from ..DAOS.Schemas.UsuarioSchema import UsuarioSchema
@@ -14,14 +20,40 @@ class UsuarioService():
 		print('UsuarioService')
 
 	@staticmethod
-	def guardar(usuarioVO):
-		print(colored("UsuarioService: guardar(); {}".format(usuarioVO.usuario), 'cyan'))
-		respuesta = UsuarioDAO.guardar(usuarioVO)
-		print(colored(respuesta, 'cyan'))
+	def guardar(request):
+		print(colored("UsuarioService: guardar(); {}".format(request.form), 'cyan'))
+		nombre = request.form.get("nombre")
+		apellido = request.form.get("apellido")
+		usuario = request.form.get("usuario")
+		contrasena = request.form.get("contrasena")
+		enviar = True
+		mensajes = "Te falta:"
+		if(nombre==None):
+			enviar = False
+			mensajes +="\nNombre"
+		if(apellido==None):
+			enviar = False
+			mensajes +="\nApellido"
+		if(usuario==None):
+			enviar = False
+			mensajes +="\nUsuario"
+		if(contrasena==None):
+			enviar = False
+			mensajes +="\nContrasena"
 
-		if(respuesta["result"]):
-			usuario = UsuarioSchema().dump(respuesta["usuario"])
-			respuesta["usuario"] = usuario
+		if(enviar):
+			usuarioVO = UsuarioVO()
+			usuarioVO.nombre = nombre
+			usuarioVO.apellido = apellido
+			usuarioVO.usuario = usuario
+			usuarioVO.contrasena = contrasena
+			respuesta = UsuarioDAO.guardar(usuarioVO)
+			print(colored(respuesta, 'cyan'))
+			if(respuesta["result"]):
+				usuario = UsuarioSchema().dump(respuesta["usuario"])
+				respuesta["usuario"] = usuario
+		else:
+			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
 
 	@staticmethod
@@ -47,13 +79,50 @@ class UsuarioService():
 			}
 
 	@staticmethod
-	def editar(usuarioVO):
-		print(colored("UsuarioService: editar(); {}".format(usuarioVO.idusuario), 'cyan'))
-		respuesta = UsuarioDAO.editar(usuarioVO)
-		print(colored(respuesta, 'cyan'))
-		if(respuesta["result"]):
-			usuario = UsuarioSchema().dump(respuesta["usuario"])
-			respuesta["usuario"] = usuario
+	def editar(request):
+		print(colored("UsuarioService: editar(); {}".format(request.form), 'cyan'))
+		idUsuario = request.form.get("idUsuario")
+		nombre = request.form.get("nombre")
+		apellido = request.form.get("apellido")
+		usuario = request.form.get("usuario")
+		contrasena = request.form.get("contrasena")
+		valid = request.form.get("valid")
+		enviar = True
+		mensajes = "Te faltó:"
+		if(idUsuario==None):
+			enviar = False
+			mensajes +="\nid del usuario"
+		if(nombre==None):
+			enviar = False
+			mensajes +="\nNombre"
+		if(apellido==None):
+			enviar = False
+			mensajes +="\nApellido"
+		if(usuario==None):
+			enviar = False
+			mensajes +="\nUsuario"
+		if(contrasena==None):
+			enviar = False
+			mensajes +="\nContrasena"
+		if(valid==None):
+			enviar = False
+			mensajes +="\nValid"
+
+		if(enviar):
+			usuarioVO = UsuarioVO()
+			usuarioVO.idusuario = idUsuario
+			usuarioVO.nombre = nombre
+			usuarioVO.apellido = apellido
+			usuarioVO.usuario = usuario
+			usuarioVO.contrasena = contrasena
+			usuarioVO.valid = valid
+			respuesta = UsuarioDAO.editar(usuarioVO)
+			print(colored(respuesta, 'cyan'))
+			if(respuesta["result"]):
+				usuario = UsuarioSchema().dump(respuesta["usuario"])
+				respuesta["usuario"] = usuario
+		else:
+			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
 
 	@staticmethod
