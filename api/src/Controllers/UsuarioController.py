@@ -21,9 +21,9 @@ class UsuarioController():
 		return UsuarioService.guardar(request)
 
 	@usuarioBluePrint.route('/', methods=['GET'])
-	def obtener(pagina):
+	def obtener():
 		print('UsuarioController: obtener()')
-		respuesta = UsuarioService.obtener(pagina)
+		respuesta = UsuarioService.obtener()
 		return jsonify(respuesta)
 
 	@usuarioBluePrint.route('/<int:idUsuario>', methods=['GET'])

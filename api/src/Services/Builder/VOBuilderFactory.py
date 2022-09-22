@@ -1,4 +1,5 @@
 from .TareaVOBuilder import TareaVOBuilder
+from .UsuarioVOBuilder import UsuarioVOBuilder
 
 class VOBuilderFactory():
 
@@ -11,3 +12,7 @@ class VOBuilderFactory():
 	@staticmethod
 	def getTareaVOBuilder():
 		return TareaVOBuilder()
+
+	@staticmethod
+	def getUsuarioVOBuilder():
+		return UsuarioVOBuilder()

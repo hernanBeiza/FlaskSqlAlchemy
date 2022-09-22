@@ -3,12 +3,13 @@ from termcolor import colored
 from ..app import db
 
 from ..DAOS.Models.Usuario import Usuario
-from ..DAOS.Schemas.UsuarioSchema import UsuarioSchema
 
 class UsuarioDAO():
 
+	'''
 	def __init__(self):
 		print('UsuarioDAO')
+	'''
 
 	@staticmethod
 	def guardar(usuarioVO):
@@ -33,9 +34,9 @@ class UsuarioDAO():
 		return respuesta
 
 	@staticmethod
-	def obtener(pagina):
+	def obtener():
 		print(colored("UsuarioService: obtener();", 'yellow'))
-		return Usuario.query.paginate(pagina,int(totalPorPagina), False).items
+		return Usuario.query.all()
 
 	@staticmethod
 	def obtenerConID(idUsuario):
@@ -79,7 +80,7 @@ class UsuarioDAO():
 				respuesta = {"result":result,"mensajes":mensajes}
 				return respuesta
 			except Exception as e:
-				print (e)
+				print ("Error al eliminar el usuario con id {}. Error: {}".format(idUsuario, e))
 				#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
 				db.session.rollback()
 				# for resetting non-commited .add()

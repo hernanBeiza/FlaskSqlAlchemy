@@ -2,6 +2,7 @@ from ...app import ma
 from marshmallow import Schema, fields
 from ..Models.Tarea import Tarea
 
+#TODO Deprecado
 #Forma manual
 """
 class TareaSchema(ma.Schema):
@@ -17,8 +18,8 @@ class TareaSchema(ma.ModelSchema):
 		model = Tarea
 		ordered = True
 
-	idtarea = fields.Integer()
-	idusuario = fields.Integer()
+	idtarea = fields.Integer(data_key="id")
+	idusuario = fields.Integer(data_key="idUsuario")
 	titulo = fields.String()
 	timestamp = fields.DateTime()
 	valid = fields.Integer()

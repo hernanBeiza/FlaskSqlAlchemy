@@ -9,10 +9,9 @@ from termcolor import colored
 from ..app import db
 
 from ..DAOS.Models.Usuario import Usuario
-from ..DAOS.Schemas.UsuarioSchema import UsuarioSchema
 from ..DAOS.UsuarioDAO import UsuarioDAO
-
 from .VOS.UsuarioVO import UsuarioVO
+from .Builder.VOBuilderFactory import VOBuilderFactory
 
 class UsuarioService():
 
@@ -57,10 +56,20 @@ class UsuarioService():
 		return respuesta
 
 	@staticmethod
-	def obtener(pagina):
-		respuesta = UsuarioDAO.obtener(pagina)
-		if(respuesta["result"]):
-			respuesta["usuarios"] = UsuarioSchema(many=True).dump(respuesta["usuarios"])
+	def obtener():
+		usuarios = UsuarioDAO.obtener()
+		if len(usuarios)>0:
+			data = {
+				"result":True,
+				"usuarios":VOBuilderFactory().getUsuarioVOBuilder().fromUsuarios(usuarios).builds(),
+				"mensajes":"Se encontraron {} usuarios".format(len(usuarios))
+			}
+		else:
+			data = {
+				"result":False,
+				"errores":"No se encontraron usuarios"
+			}
+		return data
 
 	@staticmethod
 	def obtenerConID(idUsuario):
@@ -69,7 +78,7 @@ class UsuarioService():
 		if(usuario is not None):
 			return {
 				"result": True,
-				"usuario": UsuarioSchema().dump(usuario),
+				"usuario": VOBuilderFactory().getUsuarioVOBuilder().fromUsuario(usuario).build(),
 				"mensajes": "Se encontró usuario con id {}".format(idUsuario)
 			}
 		else:
@@ -119,8 +128,9 @@ class UsuarioService():
 			respuesta = UsuarioDAO.editar(usuarioVO)
 			print(colored(respuesta, 'cyan'))
 			if(respuesta["result"]):
-				usuario = UsuarioSchema().dump(respuesta["usuario"])
-				respuesta["usuario"] = usuario
+				usuarioVO = VOBuilderFactory().getUsuarioVOBuilder().fromUsuario(respuesta["usuario"]).build()
+				print (usuarioVO)
+				respuesta["usuario"] = usuarioVO
 		else:
 			respuesta = {"result":False, "errores":mensajes}
 		return respuesta

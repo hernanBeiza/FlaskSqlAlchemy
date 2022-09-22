@@ -3,7 +3,6 @@ from termcolor import colored
 from ..app import db
 
 from ..DAOS.Models.Tarea import Tarea
-from ..DAOS.Schemas.TareaSchema import TareaSchema
 
 class TareaDAO():
 
@@ -91,7 +90,7 @@ class TareaDAO():
 				respuesta = {"result":result,"mensajes":mensajes}
 				return respuesta
 			except Exception as e:
-				print (e)
+				print ("Error al eliminar la tarea con id {}. Error: {}".format(idTarea, e))
 				#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
 				db.session.rollback()
 				# for resetting non-commited .add()

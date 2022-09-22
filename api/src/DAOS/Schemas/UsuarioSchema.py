@@ -3,6 +3,7 @@ from marshmallow import Schema, fields
 from ..Models.Usuario import Usuario
 from .TareaSchema import TareaSchema
 
+#TODO Deprecado
 #Forma manual
 '''
 class UsuarioSchema(ma.Schema):
@@ -16,7 +17,7 @@ class UsuarioSchema(ma.ModelSchema):
 		model = Usuario
 		ordered = True
 
-	idusuario = fields.Integer()
+	idusuario = fields.Integer(data_key="id")
 	nombre = fields.String()
 	apellido = fields.String()
 	usuario = fields.String()
