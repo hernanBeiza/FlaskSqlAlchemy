@@ -42,7 +42,7 @@ docker pull mysql:8.0.30
 - Crear contenedor
 
 ```bash
-docker run --name tareas-mysql -e MYSQL_ROOT_PASSWORD=mypass123 -d -p 3306:3306  mysql:8.0.30
+docker run --name tareas-mysql -e MYSQL_ROOT_PASSWORD=mypass123 -e TZ=America/Santiago -d -p 3306:3306  mysql:8.0.30
 ```
 
 - Conectar usando 3306

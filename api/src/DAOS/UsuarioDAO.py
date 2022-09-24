@@ -13,17 +13,17 @@ class UsuarioDAO():
 
 	@staticmethod
 	def guardar(usuarioVO):
-		print(colored("UsuarioService: guardar(); {}".format(usuarioVO.usuario), 'yellow'))
+		print(colored("UsuarioDAO: guardar(); {}".format(usuarioVO.usuario), 'yellow'))
 		usuario = Usuario(None, usuarioVO.nombre, usuarioVO.apellido, usuarioVO.usuario, usuarioVO.contrasena, 2, [])
-		db.session.add(usuario)
-		result=True
-		mensajes="Usuario guardado correctamente"
 		try:
+			db.session.add(usuario)
 			db.session.commit()
-			print(colored("UsuarioService: usuario guardado correctamente", 'yellow'))
+			print(colored("UsuarioDAO: usuario guardado correctamente", 'yellow'))
+			result=True
+			mensajes="Usuario guardado correctamente"
 			#usuario = Usuario.query.get(usuario.idusuario)
 		except Exception as e:
-			print (e)
+			print(colored("UsuarioDAO: Usuario no se pudo guardar", 'red'))
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
 			db.session.rollback()
 			# for resetting non-commited .add()
@@ -35,17 +35,17 @@ class UsuarioDAO():
 
 	@staticmethod
 	def obtener():
-		print(colored("UsuarioService: obtener();", 'yellow'))
+		print(colored("UsuarioDAO: obtener();", 'yellow'))
 		return Usuario.query.all()
 
 	@staticmethod
 	def obtenerConID(idUsuario):
-		print(colored("UsuarioService: obtenerConID(); {}".format(idUsuario), 'yellow'))
+		print(colored("UsuarioDAO: obtenerConID(); {}".format(idUsuario), 'yellow'))
 		return Usuario.query.get(idUsuario)
 
 	@staticmethod
 	def editar(usuarioVO):
-		print(colored("UsuarioService: editar(); {}".format(usuarioVO.idusuario), 'yellow'))
+		print(colored("UsuarioDAO: editar(); {}".format(usuarioVO.idusuario), 'yellow'))
 		result=True
 		mensajes="Usuario editado correctamente"
 		try:
@@ -58,7 +58,7 @@ class UsuarioDAO():
 			db.session.commit()
 			#usuario = Usuario.query.get(usuario.idusuario)
 		except Exception as e:
-			print (e)
+			print ("Usuario con id {} no se pudo editar. {}".format(usuarioVO.id,e))
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
 			db.session.rollback()
 			# for resetting non-commited .add()

@@ -13,6 +13,8 @@ class UsuarioVOBuilder(Schema):
 			model = Usuario
 			ordered = True
 
+	#Schema
+	##Modelo - Dato a mostrar
 	idusuario = fields.Integer(data_key="id")
 	nombre = fields.String()
 	apellido = fields.String()

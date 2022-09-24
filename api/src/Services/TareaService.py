@@ -39,8 +39,11 @@ class TareaService():
 			tareaVO.idusuario = idUsuario
 			respuesta = TareaDAO.guardar(tareaVO)
 			print(colored(respuesta, 'cyan'))
-			tarea = VOBuilderFactory.getTareaVOBuilder().fromTarea(respuesta["tarea"]).build()
-			respuesta["tarea"] = tarea
+			if(respuesta["result"]):
+				tarea = VOBuilderFactory.getTareaVOBuilder().fromTarea(respuesta["tarea"]).build()
+				respuesta["tarea"] = tarea
+			else:
+				respuesta = {"result":False, "errores":respuesta["mensajes"]}
 		else:
 			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
@@ -142,6 +145,8 @@ class TareaService():
 			if(respuesta["result"]):
 				tareaVO = VOBuilderFactory().getTareaVOBuilder().fromTarea(respuesta["tarea"]).build()
 				respuesta["tarea"] = tareaVO
+			else:
+				return {"result":False, "errores":respuesta["mensajes"]}
 		else:
 			return {"result":False, "errores":mensajes}
 

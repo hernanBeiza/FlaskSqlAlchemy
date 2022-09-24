@@ -49,8 +49,10 @@ class UsuarioService():
 			respuesta = UsuarioDAO.guardar(usuarioVO)
 			print(colored(respuesta, 'cyan'))
 			if(respuesta["result"]):
-				usuario = UsuarioSchema().dump(respuesta["usuario"])
+				usuario = VOBuilderFactory().getUsuarioVOBuilder().fromUsuario(respuesta["usuario"]).build(),
 				respuesta["usuario"] = usuario
+			else:
+				respuesta = {"result":False, "errores":respuesta["mensajes"]}
 		else:
 			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
@@ -129,8 +131,9 @@ class UsuarioService():
 			print(colored(respuesta, 'cyan'))
 			if(respuesta["result"]):
 				usuarioVO = VOBuilderFactory().getUsuarioVOBuilder().fromUsuario(respuesta["usuario"]).build()
-				print (usuarioVO)
 				respuesta["usuario"] = usuarioVO
+			else:
+				respuesta = {"result":False, "errores":respuesta["mensajes"]}
 		else:
 			respuesta = {"result":False, "errores":mensajes}
 		return respuesta

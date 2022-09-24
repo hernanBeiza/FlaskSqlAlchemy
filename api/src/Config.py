@@ -5,7 +5,7 @@ from termcolor import colored
 class Config:
 
 	@staticmethod
-	def inicarConApp(app):
+	def iniciarConApp(app):
 		#print("Config: init_app")
 		#Configuracion de Flask
 		print(colored("Iniciar configuración de Flash", 'yellow'))

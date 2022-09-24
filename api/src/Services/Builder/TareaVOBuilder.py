@@ -11,6 +11,8 @@ class TareaVOBuilder(ma.ModelSchema):
 		model = Tarea
 		ordered = True
 
+	#Schema
+	##Modelo - Dato a mostrar
 	idtarea = fields.Integer(data_key="id")
 	idusuario = fields.Integer(data_key="idUsuario")
 	titulo = fields.String()
