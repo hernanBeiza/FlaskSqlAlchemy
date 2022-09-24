@@ -123,11 +123,6 @@ pip install -r requirements.txt
 
 - Setear variables de entorno en la CLI, teniendo en cuenta la uybicación del archivo app.py
 
-```bash
-export FLASK_APP=app.py
-export FLASK_ENV=development
-```
-
 ### Opción 1
 
 ```bash
