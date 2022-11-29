@@ -6,10 +6,10 @@ from flask import Blueprint
 
 from termcolor import colored
 
-from ..app import app;
+from src.app import app;
 
-from ..Services.TareaService import TareaService
-from ..Services.VOS.TareaVO import TareaVO
+from src.Services.TareaService import TareaService
+from src.Services.VOS.TareaVO import TareaVO
 
 tareaBluePrint = Blueprint('tarea', 'tarea', url_prefix='/tarea')
 

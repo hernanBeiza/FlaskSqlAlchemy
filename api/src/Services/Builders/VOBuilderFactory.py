@@ -1,5 +1,5 @@
-from .TareaVOBuilder import TareaVOBuilder
-from .UsuarioVOBuilder import UsuarioVOBuilder
+from src.Services.Builders.TareaVOBuilder import TareaVOBuilder
+from src.Services.Builders.UsuarioVOBuilder import UsuarioVOBuilder
 
 class VOBuilderFactory():
 

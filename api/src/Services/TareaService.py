@@ -5,12 +5,12 @@ from flask import jsonify
 from flask import Blueprint
 
 from termcolor import colored
-from ..app import db
+from src.app import db
 
-from ..DAOS.TareaDAO import TareaDAO
+from src.DAOS.TareaDAO import TareaDAO
 
-from .VOS.TareaVO import TareaVO
-from .Builder.VOBuilderFactory import VOBuilderFactory
+from src.Services.VOS.TareaVO import TareaVO
+from src.Services.Builders.VOBuilderFactory import VOBuilderFactory
 
 class TareaService():
 

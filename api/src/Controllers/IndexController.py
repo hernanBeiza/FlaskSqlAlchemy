@@ -1,6 +1,6 @@
-from ..app import app;
+from src.app import app;
 
-from ..Services.IndexService import IndexService
+from src.Services.IndexService import IndexService
 
 class IndexController():
 

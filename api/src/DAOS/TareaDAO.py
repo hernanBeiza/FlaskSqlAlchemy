@@ -1,8 +1,8 @@
 from termcolor import colored
 
-from ..app import db
+from src.app import db
 
-from ..DAOS.Models.Tarea import Tarea
+from src.DAOS.Models.Tarea import Tarea
 
 class TareaDAO():
 

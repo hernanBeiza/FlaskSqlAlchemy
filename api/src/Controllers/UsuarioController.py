@@ -6,10 +6,10 @@ from flask import Blueprint
 
 from termcolor import colored
 
-from ..app import app;
+from src.app import app;
 
-from ..Services.UsuarioService import UsuarioService
-from ..Services.VOS.UsuarioVO import UsuarioVO
+from src.Services.UsuarioService import UsuarioService
+from src.Services.VOS.UsuarioVO import UsuarioVO
 
 usuarioBluePrint = Blueprint('usuario', 'usuario', url_prefix='/usuario')
 

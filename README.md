@@ -119,7 +119,7 @@ python3 -m virtualenv venv
 pip install -r requirements.txt
 ```
 
-## Configuracióñ de servidor de prueba
+## Configuración de servidor de prueba
 
 - Setear variables de entorno en la CLI, teniendo en cuenta la uybicación del archivo app.py
 

@@ -6,9 +6,9 @@ from flask import Blueprint
 from app import app;
 """
 
-from .Controllers.TareaController import *
-from .Controllers.UsuarioController import *
-from .Controllers.IndexController import *
+from src.Controllers.TareaController import *
+from src.Controllers.UsuarioController import *
+from src.Controllers.IndexController import *
 
 """
 indexBluePrint = Blueprint('index', 'index', url_prefix='/')

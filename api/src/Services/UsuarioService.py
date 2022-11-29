@@ -6,12 +6,12 @@ from flask import Blueprint
 
 from termcolor import colored
 
-from ..app import db
+from src.app import db
 
-from ..DAOS.Models.Usuario import Usuario
-from ..DAOS.UsuarioDAO import UsuarioDAO
-from .VOS.UsuarioVO import UsuarioVO
-from .Builder.VOBuilderFactory import VOBuilderFactory
+from src.DAOS.Models.Usuario import Usuario
+from src.DAOS.UsuarioDAO import UsuarioDAO
+from src.Services.VOS.UsuarioVO import UsuarioVO
+from src.Services.Builders.VOBuilderFactory import VOBuilderFactory
 
 class UsuarioService():
 

@@ -1,10 +1,10 @@
 from marshmallow import Schema, fields
 from termcolor import colored
 
-from ...app import ma
-from ...DAOS.Models.Tarea import Tarea
-from ..VOS.TareaVO import TareaVO
-from ...DAOS.Schemas.TareaSchema import TareaSchema
+from src.app import ma
+from src.DAOS.Models.Tarea import Tarea
+from src.Services.VOS.TareaVO import TareaVO
+from src.DAOS.Schemas.TareaSchema import TareaSchema
 
 class TareaVOBuilder(ma.ModelSchema):
 	class Meta:

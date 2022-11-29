@@ -1,8 +1,8 @@
 from termcolor import colored
 
-from ..app import db
+from src.app import db
 
-from ..DAOS.Models.Usuario import Usuario
+from src.DAOS.Models.Usuario import Usuario
 
 class UsuarioDAO():
 

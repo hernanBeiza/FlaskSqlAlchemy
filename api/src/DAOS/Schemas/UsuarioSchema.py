@@ -1,7 +1,7 @@
-from ...app import ma
+from src.app import ma
 from marshmallow import Schema, fields
-from ..Models.Usuario import Usuario
-from .TareaSchema import TareaSchema
+from src.DAOS.Models.Usuario import Usuario
+from src.DAOS.Schemas.TareaSchema import TareaSchema
 
 #TODO Deprecado
 #Forma manual

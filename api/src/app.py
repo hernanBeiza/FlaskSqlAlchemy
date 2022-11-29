@@ -1,7 +1,7 @@
 import flask
 from termcolor import colored
 
-from .Config import Config
+from src.Config import Config
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow

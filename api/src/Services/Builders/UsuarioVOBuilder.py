@@ -1,11 +1,10 @@
 from marshmallow import Schema, fields
 from termcolor import colored
 
-from ...app import ma
-from ...DAOS.Models.Usuario import Usuario
-from ..VOS.UsuarioVO import UsuarioVO
-from ...DAOS.Schemas.UsuarioSchema import UsuarioSchema
-from .TareaVOBuilder import TareaVOBuilder
+from src.app import ma
+from src.DAOS.Models.Usuario import Usuario
+from src.Services.VOS.UsuarioVO import UsuarioVO
+from src.Services.Builders.TareaVOBuilder import TareaVOBuilder
 
 
 class UsuarioVOBuilder(Schema):
