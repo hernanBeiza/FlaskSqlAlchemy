@@ -13,6 +13,7 @@ class UsuarioVOBuilder(Schema):
 			ordered = True
 
 	#Schema
+	#TODO Ver si se puede mover a un archivo aparte
 	##Modelo - Dato a mostrar
 	idusuario = fields.Integer(data_key="id")
 	nombre = fields.String()

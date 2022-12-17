@@ -5,7 +5,6 @@ from flask import jsonify
 from flask import Blueprint
 
 from termcolor import colored
-from src.app import db
 
 from src.DAOS.TareaDAO import TareaDAO
 

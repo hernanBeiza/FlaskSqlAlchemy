@@ -6,8 +6,6 @@ from flask import Blueprint
 
 from termcolor import colored
 
-from src.app import db
-
 from src.DAOS.Models.Usuario import Usuario
 from src.DAOS.UsuarioDAO import UsuarioDAO
 from src.Services.VOS.UsuarioVO import UsuarioVO

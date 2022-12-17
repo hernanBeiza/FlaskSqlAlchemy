@@ -12,6 +12,7 @@ class TareaVOBuilder(ma.ModelSchema):
 		ordered = True
 
 	#Schema
+	#TODO Ver si se puede mover a un archivo aparte
 	##Modelo - Dato a mostrar
 	idtarea = fields.Integer(data_key="id")
 	idusuario = fields.Integer(data_key="idUsuario")

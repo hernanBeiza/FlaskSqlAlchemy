@@ -1,6 +1,6 @@
 from termcolor import colored
 
-from src.app import db
+from src.DB import DB
 
 from src.DAOS.Models.Tarea import Tarea
 
@@ -15,20 +15,20 @@ class TareaDAO():
 	def guardar(tareaVO):
 		print(colored("TareaDAO: guardar(); {}".format(tareaVO.idusuario), 'yellow'))
 		tarea = Tarea(None, tareaVO.titulo, 2, tareaVO.idusuario)
-		db.session.add(tarea)
+		DB.obtener().session.add(tarea)
 		result=True
 		mensajes="Tarea guardada correctamente"
 		try:
-			db.session.commit()
+			DB.obtener().session.commit()
 			print(colored("TareaDAO: tarea guardada correctamente", 'yellow'))
 			#usuario = Usuario.query.get(usuario.idusuario)
 			respuesta = {"result":result,"mensajes":mensajes, "tarea":tarea}
 		except Exception as e:
 			print (e)
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-			db.session.rollback()
+			DB.obtener().session.rollback()
 			# for resetting non-commited .add()
-			db.session.flush()
+			DB.obtener().session.flush()
 			result=False
 			mensajes="La tarea no se pudo guardar"
 			respuesta = {"result":result,"errores":mensajes}
@@ -65,14 +65,14 @@ class TareaDAO():
 			tarea.titulo = tareaVO.titulo;
 			tarea.idusuario = tareaVO.idusuario;
 			tarea.valid = tareaVO.valid;
-			db.session.commit()
+			DB.obtener().session.commit()
 			respuesta = {"result":result,"mensajes":mensajes, "tarea":tarea}
 		except Exception as e:
 			print (e)
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-			db.session.rollback()
+			DB.obtener().session.rollback()
 			# for resetting non-commited .add()
-			db.session.flush()
+			DB.obtener().session.flush()
 			result=False
 			mensajes="La tarea {} no se pudo editar".format(tareaVO.idtarea)
 			respuesta = {"result":result,"errores":mensajes}
@@ -85,16 +85,16 @@ class TareaDAO():
 		tarea = Tarea.query.get(idTarea)
 		if(tarea is not None):
 			try:
-				db.session.delete(tarea)
-				db.session.commit()
+				DB.obtener().session.delete(tarea)
+				DB.obtener().session.commit()
 				respuesta = {"result":result,"mensajes":mensajes}
 				return respuesta
 			except Exception as e:
 				print ("Error al eliminar la tarea con id {}. Error: {}".format(idTarea, e))
 				#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-				db.session.rollback()
+				DB.obtener().session.rollback()
 				# for resetting non-commited .add()
-				db.session.flush()
+				DB.obtener().session.flush()
 				result=False
 				mensajes="La tarea con id {} no se pudo eliminar".format(idTarea)
 		else:

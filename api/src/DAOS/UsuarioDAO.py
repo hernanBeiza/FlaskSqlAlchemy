@@ -1,6 +1,6 @@
 from termcolor import colored
 
-from src.app import db
+from src.DB import DB
 
 from src.DAOS.Models.Usuario import Usuario
 
@@ -16,8 +16,8 @@ class UsuarioDAO():
 		print(colored("UsuarioDAO: guardar(); {}".format(usuarioVO.usuario), 'yellow'))
 		usuario = Usuario(None, usuarioVO.nombre, usuarioVO.apellido, usuarioVO.usuario, usuarioVO.contrasena, 2, [])
 		try:
-			db.session.add(usuario)
-			db.session.commit()
+			DB.obtener().session.add(usuario)
+			DB.obtener().session.commit()
 			print(colored("UsuarioDAO: usuario guardado correctamente", 'yellow'))
 			result=True
 			mensajes="Usuario guardado correctamente"
@@ -25,9 +25,9 @@ class UsuarioDAO():
 		except Exception as e:
 			print(colored("UsuarioDAO: Usuario no se pudo guardar", 'red'))
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-			db.session.rollback()
+			DB.obtener().session.rollback()
 			# for resetting non-commited .add()
-			db.session.flush()
+			DB.obtener().session.flush()
 			result=False
 			mensajes="El usuario no se pudo guardar"
 		respuesta = {"result":result,"mensajes":mensajes, "usuario":usuario}
@@ -55,14 +55,14 @@ class UsuarioDAO():
 			usuario.usuario = usuarioVO.usuario;
 			usuario.contrasena = usuarioVO.contrasena;
 			usuario.valid = usuarioVO.valid;
-			db.session.commit()
+			DB().obtener().session.commit()
 			#usuario = Usuario.query.get(usuario.idusuario)
 		except Exception as e:
 			print ("Usuario con id {} no se pudo editar. {}".format(usuarioVO.id,e))
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-			db.session.rollback()
+			DB.obtener().session.rollback()
 			# for resetting non-commited .add()
-			db.session.flush()
+			DB.obtener().session.flush()
 			result=False
 			mensajes="El usuario no se pudo editar"
 		respuesta = {"result":result,"mensajes":mensajes, "usuario":usuario}
@@ -75,16 +75,16 @@ class UsuarioDAO():
 		usuario = Usuario.query.get(idUsuario)
 		if(usuario is not None):
 			try:
-				db.session.delete(usuario)
-				db.session.commit()
+				DB.obtener().session.delete(usuario)
+				DB.obtener().session.commit()
 				respuesta = {"result":result,"mensajes":mensajes}
 				return respuesta
 			except Exception as e:
 				print ("Error al eliminar el usuario con id {}. Error: {}".format(idUsuario, e))
 				#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-				db.session.rollback()
+				DB.obtener().session.rollback()
 				# for resetting non-commited .add()
-				db.session.flush()
+				DB.obtener().session.flush()
 				result=False
 				mensajes="El usuario con id {} no se pudo eliminar".format(idUsuario)
 		else:
