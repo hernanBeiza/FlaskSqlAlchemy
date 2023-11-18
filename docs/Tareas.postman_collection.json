@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "20b27925-23ad-4219-b74c-4b2a67d508fd",
+		"name": "Tareas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tarea: guardar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idUsuario",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "titulo",
+							"value": "Mi primer anota",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/tarea",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tarea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tarea: obtener",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/tarea",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tarea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tarea: obtener con id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/tarea/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tarea",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tarea: editar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idUsuario",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "titulo",
+							"value": "Mi primera nota editada",
+							"type": "default"
+						},
+						{
+							"key": "idTarea",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "valid",
+							"value": "1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/tarea/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tarea",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario: guardar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Hernán",
+							"type": "default"
+						},
+						{
+							"key": "apellido",
+							"value": "Beiza",
+							"type": "default"
+						},
+						{
+							"key": "usuario",
+							"value": "hb",
+							"type": "default"
+						},
+						{
+							"key": "contrasena",
+							"value": "9040207",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario: obtener",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario: obtener con id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/usuario/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
