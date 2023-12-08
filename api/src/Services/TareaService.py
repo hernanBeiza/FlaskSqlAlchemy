@@ -5,13 +5,13 @@ from flask import jsonify
 from flask import Blueprint
 
 from termcolor import colored
-from ..app import db
+from src.app import app
 
-from ..DAOS.Models.Tarea import Tarea
-from ..DAOS.Schemas.TareaSchema import TareaSchema
-from ..DAOS.TareaDAO import TareaDAO
+from src.DAOS.Models.Tarea import Tarea
+from src.DAOS.Schemas.TareaSchema import TareaSchema
+from src.DAOS.TareaDAO import TareaDAO
 
-from .VOS.TareaVO import TareaVO
+from src.Services.VOS.TareaVO import TareaVO
 
 class TareaService():
 
@@ -78,7 +78,7 @@ class TareaService():
 		else:
 			data = {
 				"result":False,
-				"errores":"No se encontraron tareas"
+				"errores":"No se encontraron tareas en la página {}".format(pagina)
 			}
 		return data
 
@@ -90,12 +90,12 @@ class TareaService():
 			data = {
 				"result":True,
 				"tareas":TareaSchema(many=False).dump(tarea),
-				"mensajes":"Se encontró tarea con id {}".format(len(idTarea))
+				"mensajes":"Se encontró tarea con id {}".format(idTarea)
 			}
 		else:
 			data = {
 				"result":False,
-				"errores":"No se encontraron tarea con id {}".format(idTarea)
+				"errores":"No se encontró tarea con id {}".format(idTarea)
 			}
 		return data
 
