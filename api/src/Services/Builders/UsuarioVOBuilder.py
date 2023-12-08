@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields
 from termcolor import colored
 
-from src.app import ma
+from src.ma import ma
 from src.DAOS.Models.Usuario import Usuario
 from src.Services.VOS.UsuarioVO import UsuarioVO
 from src.Services.Builders.TareaVOBuilder import TareaVOBuilder

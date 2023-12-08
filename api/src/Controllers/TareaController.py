@@ -1,15 +1,12 @@
 from flask import request
-from flask import escape
-from flask import json
 from flask import jsonify
 from flask import Blueprint
 
 from termcolor import colored
 
-from src.app import app;
+from src.app import app
 
 from src.Services.TareaService import TareaService
-from src.Services.VOS.TareaVO import TareaVO
 
 tareaBluePrint = Blueprint('tarea', 'tarea', url_prefix='/tarea')
 

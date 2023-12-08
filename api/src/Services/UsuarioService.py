@@ -1,15 +1,9 @@
-from flask import request
-from flask import escape
-from flask import json
-from flask import jsonify
-from flask import Blueprint
-
 from termcolor import colored
 
-from src.DAOS.Models.Usuario import Usuario
+from src.DAOS.Schemas.UsuarioSchema import UsuarioSchema
 from src.DAOS.UsuarioDAO import UsuarioDAO
+
 from src.Services.VOS.UsuarioVO import UsuarioVO
-from src.Services.Builders.VOBuilderFactory import VOBuilderFactory
 
 class UsuarioService():
 
@@ -47,29 +41,33 @@ class UsuarioService():
 			respuesta = UsuarioDAO.guardar(usuarioVO)
 			print(colored(respuesta, 'cyan'))
 			if(respuesta["result"]):
-				usuario = VOBuilderFactory().getUsuarioVOBuilder().fromUsuario(respuesta["usuario"]).build(),
+				usuario = UsuarioSchema().dump(respuesta["usuario"])
 				respuesta["usuario"] = usuario
-			else:
-				respuesta = {"result":False, "errores":respuesta["mensajes"]}
 		else:
-			respuesta = {"result":False, "errores":mensajes}
+			respuesta = {"result": False, "errores": mensajes}
 		return respuesta
 
 	@staticmethod
 	def obtener():
 		usuarios = UsuarioDAO.obtener()
-		if len(usuarios)>0:
-			data = {
-				"result":True,
-				"usuarios":VOBuilderFactory().getUsuarioVOBuilder().fromUsuarios(usuarios).builds(),
-				"mensajes":"Se encontraron {} usuarios".format(len(usuarios))
+		respuesta = {}
+		if len(usuarios) > 0:
+			respuesta["usuarios"] = UsuarioSchema(many=True).dump(usuarios)
+
+	@staticmethod
+	def obtenerPaginado(pagina):
+		usuarios = UsuarioDAO.obtenerPaginado(pagina)
+		if len(usuarios) > 0:
+			return {
+				"result": True,
+				"usuarios": UsuarioSchema(many=True).dump(usuarios),
+				"mensajes": "Se encontraron usuarios para la página {}".format(pagina)
 			}
 		else:
-			data = {
-				"result":False,
-				"errores":"No se encontraron usuarios"
+			return {
+				"result": False,
+				"errores": 'No se encontraron usuarios en la página {}'.format(pagina)
 			}
-		return data
 
 	@staticmethod
 	def obtenerConID(idUsuario):
@@ -78,13 +76,13 @@ class UsuarioService():
 		if(usuario is not None):
 			return {
 				"result": True,
-				"usuario": VOBuilderFactory().getUsuarioVOBuilder().fromUsuario(usuario).build(),
+				"usuario": UsuarioSchema().dump(usuario),
 				"mensajes": "Se encontró usuario con id {}".format(idUsuario)
 			}
 		else:
 			return {
 				"result": False,
-				"mensajes": "No se encontró usuario con id {}".format(idUsuario)
+				"errores": "No se encontró usuario con id {}".format(idUsuario)
 			}
 
 	@staticmethod
@@ -128,12 +126,10 @@ class UsuarioService():
 			respuesta = UsuarioDAO.editar(usuarioVO)
 			print(colored(respuesta, 'cyan'))
 			if(respuesta["result"]):
-				usuarioVO = VOBuilderFactory().getUsuarioVOBuilder().fromUsuario(respuesta["usuario"]).build()
-				respuesta["usuario"] = usuarioVO
-			else:
-				respuesta = {"result":False, "errores":respuesta["mensajes"]}
+				usuario = UsuarioSchema().dump(respuesta["usuario"])
+				respuesta["usuario"] = usuario
 		else:
-			respuesta = {"result":False, "errores":mensajes}
+			respuesta={"result":False,"errores":mensajes}
 		return respuesta
 
 	@staticmethod

@@ -1,33 +1,31 @@
 from termcolor import colored
 
-from src.DB import DB
+from src.db import db
 
 from src.DAOS.Models.Usuario import Usuario
 
 class UsuarioDAO():
 
-	'''
 	def __init__(self):
 		print('UsuarioDAO')
-	'''
 
 	@staticmethod
 	def guardar(usuarioVO):
-		print(colored("UsuarioDAO: guardar(); {}".format(usuarioVO.usuario), 'yellow'))
+		print(colored("UsuarioService: guardar(); {}".format(usuarioVO.usuario), 'yellow'))
 		usuario = Usuario(None, usuarioVO.nombre, usuarioVO.apellido, usuarioVO.usuario, usuarioVO.contrasena, 2, [])
+		db.session.add(usuario)
+		result=True
+		mensajes="Usuario guardado correctamente"
 		try:
-			DB.obtener().session.add(usuario)
-			DB.obtener().session.commit()
-			print(colored("UsuarioDAO: usuario guardado correctamente", 'yellow'))
-			result=True
-			mensajes="Usuario guardado correctamente"
+			db.session.commit()
+			print(colored("UsuarioService: usuario guardado correctamente", 'yellow'))
 			#usuario = Usuario.query.get(usuario.idusuario)
 		except Exception as e:
-			print(colored("UsuarioDAO: Usuario no se pudo guardar", 'red'))
+			print (e)
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-			DB.obtener().session.rollback()
+			db.session.rollback()
 			# for resetting non-commited .add()
-			DB.obtener().session.flush()
+			db.session.flush()
 			result=False
 			mensajes="El usuario no se pudo guardar"
 		respuesta = {"result":result,"mensajes":mensajes, "usuario":usuario}
@@ -35,17 +33,22 @@ class UsuarioDAO():
 
 	@staticmethod
 	def obtener():
-		print(colored("UsuarioDAO: obtener();", 'yellow'))
-		return Usuario.query.all()
+		print(colored("UsuarioService: obtener();", 'yellow'))
+		return Usuario.query.get.all()
+
+	@staticmethod
+	def obtenerPaginado(pagina):
+		print(colored("UsuarioService: obtenerPaginado();", 'yellow'))
+		return Usuario.query.paginate(pagina,int(10), False).items
 
 	@staticmethod
 	def obtenerConID(idUsuario):
-		print(colored("UsuarioDAO: obtenerConID(); {}".format(idUsuario), 'yellow'))
+		print(colored("UsuarioService: obtenerConID(); {}".format(idUsuario), 'yellow'))
 		return Usuario.query.get(idUsuario)
 
 	@staticmethod
 	def editar(usuarioVO):
-		print(colored("UsuarioDAO: editar(); {}".format(usuarioVO.idusuario), 'yellow'))
+		print(colored("UsuarioService: editar(); {}".format(usuarioVO.idusuario), 'yellow'))
 		result=True
 		mensajes="Usuario editado correctamente"
 		try:
@@ -55,14 +58,14 @@ class UsuarioDAO():
 			usuario.usuario = usuarioVO.usuario;
 			usuario.contrasena = usuarioVO.contrasena;
 			usuario.valid = usuarioVO.valid;
-			DB().obtener().session.commit()
+			db.session.commit()
 			#usuario = Usuario.query.get(usuario.idusuario)
 		except Exception as e:
-			print ("Usuario con id {} no se pudo editar. {}".format(usuarioVO.id,e))
+			print (e)
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-			DB.obtener().session.rollback()
+			db.session.rollback()
 			# for resetting non-commited .add()
-			DB.obtener().session.flush()
+			db.session.flush()
 			result=False
 			mensajes="El usuario no se pudo editar"
 		respuesta = {"result":result,"mensajes":mensajes, "usuario":usuario}
@@ -75,16 +78,16 @@ class UsuarioDAO():
 		usuario = Usuario.query.get(idUsuario)
 		if(usuario is not None):
 			try:
-				DB.obtener().session.delete(usuario)
-				DB.obtener().session.commit()
+				db.session.delete(usuario)
+				db.session.commit()
 				respuesta = {"result":result,"mensajes":mensajes}
 				return respuesta
 			except Exception as e:
-				print ("Error al eliminar el usuario con id {}. Error: {}".format(idUsuario, e))
+				print (e)
 				#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
-				DB.obtener().session.rollback()
+				db.session.rollback()
 				# for resetting non-commited .add()
-				DB.obtener().session.flush()
+				db.session.flush()
 				result=False
 				mensajes="El usuario con id {} no se pudo eliminar".format(idUsuario)
 		else:

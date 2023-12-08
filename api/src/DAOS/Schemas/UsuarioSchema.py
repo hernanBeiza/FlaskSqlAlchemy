@@ -1,9 +1,8 @@
-from src.app import ma
+from src.ma import ma
 from marshmallow import Schema, fields
 from src.DAOS.Models.Usuario import Usuario
 from src.DAOS.Schemas.TareaSchema import TareaSchema
 
-#TODO Deprecado
 #Forma manual
 '''
 class UsuarioSchema(ma.Schema):
@@ -17,7 +16,7 @@ class UsuarioSchema(ma.ModelSchema):
 		model = Usuario
 		ordered = True
 
-	idusuario = fields.Integer(data_key="id")
+	idusuario = fields.Integer()
 	nombre = fields.String()
 	apellido = fields.String()
 	usuario = fields.String()

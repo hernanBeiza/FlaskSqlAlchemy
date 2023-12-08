@@ -5,11 +5,13 @@ from flask import jsonify
 from flask import Blueprint
 
 from termcolor import colored
+from src.app import app
 
+from src.DAOS.Models.Tarea import Tarea
+from src.DAOS.Schemas.TareaSchema import TareaSchema
 from src.DAOS.TareaDAO import TareaDAO
 
 from src.Services.VOS.TareaVO import TareaVO
-from src.Services.Builders.VOBuilderFactory import VOBuilderFactory
 
 class TareaService():
 
@@ -38,11 +40,8 @@ class TareaService():
 			tareaVO.idusuario = idUsuario
 			respuesta = TareaDAO.guardar(tareaVO)
 			print(colored(respuesta, 'cyan'))
-			if(respuesta["result"]):
-				tarea = VOBuilderFactory.getTareaVOBuilder().fromTarea(respuesta["tarea"]).build()
-				respuesta["tarea"] = tarea
-			else:
-				respuesta = {"result":False, "errores":respuesta["mensajes"]}
+			tarea = TareaSchema().dump(respuesta["tarea"])
+			respuesta["tarea"] = tarea
 		else:
 			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
@@ -54,7 +53,7 @@ class TareaService():
 		if len(tareas)>0:
 			data = {
 				"result":True,
-				"tareas":VOBuilderFactory.getTareaVOBuilder().fromTareas(tareas).builds(),
+				"tareas":TareaSchema(many=True).dump(tareas),
 				"mensajes":"Se encontraron {} tareas".format(len(tareas))
 			}
 		else:
@@ -73,13 +72,13 @@ class TareaService():
 				"result":True,
 				"totalPaginas":paginacion.pages,
 				"actualPagina":paginacion.page,
-				"tareas":VOBuilderFactory.getTareaVOBuilder().fromTareas(paginacion.items).builds(),
+				"tareas":TareaSchema(many=True).dump(paginacion.items),
 				"mensajes":"Se encontraron {} tareas".format(len(paginacion.items))
 			}
 		else:
 			data = {
 				"result":False,
-				"errores":"No se encontraron tareas"
+				"errores":"No se encontraron tareas en la página {}".format(pagina)
 			}
 		return data
 
@@ -90,13 +89,13 @@ class TareaService():
 		if tarea is not None:
 			data = {
 				"result":True,
-				"tarea":VOBuilderFactory.getTareaVOBuilder().fromTarea(tarea).build(),
+				"tareas":TareaSchema(many=False).dump(tarea),
 				"mensajes":"Se encontró tarea con id {}".format(idTarea)
 			}
 		else:
 			data = {
 				"result":False,
-				"errores":"No se encontraron tarea con id {}".format(idTarea)
+				"errores":"No se encontró tarea con id {}".format(idTarea)
 			}
 		return data
 
@@ -106,7 +105,7 @@ class TareaService():
 		tareas = TareaDAO.obtenerConIDUsuario(idUsuario)
 		data = {
 			"result":len(tareas) > 0,
-			"tareas":VOBuilderFactory.getTareaVOBuilder().fromTareas(tareas).builds(),
+			"tareas":TareaSchema(many=True).dump(tareas),
 			"mensajes":"Se encontraron {} tareas para el usuario con id {}".format(len(tareas),idUsuario)
 		}
 		return data
@@ -142,10 +141,8 @@ class TareaService():
 			respuesta = TareaDAO.editar(tareaVO)
 			print(colored(respuesta, 'cyan'))
 			if(respuesta["result"]):
-				tareaVO = VOBuilderFactory().getTareaVOBuilder().fromTarea(respuesta["tarea"]).build()
-				respuesta["tarea"] = tareaVO
-			else:
-				return {"result":False, "errores":respuesta["mensajes"]}
+				tarea = TareaSchema().dump(respuesta["tarea"])
+				respuesta["tarea"] = tarea
 		else:
 			return {"result":False, "errores":mensajes}
 

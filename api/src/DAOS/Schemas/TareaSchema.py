@@ -1,8 +1,7 @@
-from src.app import ma
+from src.ma import ma
 from marshmallow import Schema, fields
 from src.DAOS.Models.Tarea import Tarea
 
-#TODO Deprecado
 #Forma manual
 """
 class TareaSchema(ma.Schema):
@@ -18,8 +17,8 @@ class TareaSchema(ma.ModelSchema):
 		model = Tarea
 		ordered = True
 
-	idtarea = fields.Integer(data_key="id")
-	idusuario = fields.Integer(data_key="idUsuario")
+	idtarea = fields.Integer()
+	idusuario = fields.Integer()
 	titulo = fields.String()
 	timestamp = fields.DateTime()
 	valid = fields.Integer()
