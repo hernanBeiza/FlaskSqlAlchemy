@@ -1,12 +1,15 @@
 from flask import request
+from flask import escape
+from flask import json
 from flask import jsonify
 from flask import Blueprint
 
 from termcolor import colored
 
-from src.app import app
+from ..app import app;
 
-from src.Services.UsuarioService import UsuarioService
+from ..Services.UsuarioService import UsuarioService
+from ..Services.VOS.UsuarioVO import UsuarioVO
 
 usuarioBluePrint = Blueprint('usuario', 'usuario', url_prefix='/usuario')
 
@@ -18,15 +21,9 @@ class UsuarioController():
 		return UsuarioService.guardar(request)
 
 	@usuarioBluePrint.route('/', methods=['GET'])
-	def obtener():
+	def obtener(pagina):
 		print('UsuarioController: obtener()')
-		respuesta = UsuarioService.obtener()
-		return jsonify(respuesta)
-
-	@usuarioBluePrint.route('/pagina/<int:pagina>', methods=['GET'])
-	def obtenerPaginado(pagina):
-		print('UsuarioController: obtenerPaginado() de pagina {}'.format(pagina))
-		respuesta = UsuarioService.obtenerPaginado(pagina)
+		respuesta = UsuarioService.obtener(pagina)
 		return jsonify(respuesta)
 
 	@usuarioBluePrint.route('/<int:idUsuario>', methods=['GET'])

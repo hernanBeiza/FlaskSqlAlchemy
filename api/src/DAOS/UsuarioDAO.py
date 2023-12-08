@@ -1,9 +1,9 @@
 from termcolor import colored
 
-from src.db import db
+from ..app import db
 
-from src.DAOS.Models.Usuario import Usuario
-from src.DAOS.Schemas.UsuarioSchema import UsuarioSchema
+from ..DAOS.Models.Usuario import Usuario
+from ..DAOS.Schemas.UsuarioSchema import UsuarioSchema
 
 class UsuarioDAO():
 
@@ -33,14 +33,9 @@ class UsuarioDAO():
 		return respuesta
 
 	@staticmethod
-	def obtener():
+	def obtener(pagina):
 		print(colored("UsuarioService: obtener();", 'yellow'))
-		return Usuario.query.get.all()
-
-	@staticmethod
-	def obtenerPaginado(pagina):
-		print(colored("UsuarioService: obtenerPaginado();", 'yellow'))
-		return Usuario.query.paginate(pagina,int(10), False).items
+		return Usuario.query.paginate(pagina,int(totalPorPagina), False).items
 
 	@staticmethod
 	def obtenerConID(idUsuario):

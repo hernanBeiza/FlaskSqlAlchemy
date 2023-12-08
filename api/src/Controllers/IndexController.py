@@ -1,6 +1,6 @@
-from src.app import app
+from ..app import app;
 
-from src.Services.IndexService import IndexService
+from ..Services.IndexService import IndexService
 
 @app.route('/', endpoint='/', methods = ['GET'])
 def saludar():

@@ -4,14 +4,14 @@
 
 ## Requerimientos
 
-- Click==8.1.3
-- Flask==2.3.0
+- Click==7.0
+- Flask==1.1.1
 - Flask-DotEnv==0.1.2
 - flask-marshmallow==0.10.1
-- Flask-SQLAlchemy==2.5.1
-- itsdangerous==2.1.2
-- Jinja2==3.1.2
-- MarkupSafe==2.1.1
+- Flask-SQLAlchemy==2.4.1
+- itsdangerous==1.1.0
+- Jinja2==2.11.1
+- MarkupSafe==1.1.1
 - marshmallow==3.0.0
 - marshmallow-sqlalchemy==0.21.0
 - mysql-connector-python==8.0.30
@@ -19,7 +19,7 @@
 - SQLAlchemy==1.3.13
 - termcolor==1.1.0
 - virtualenv==20.16.5
-- Werkzeug==2.3.0
+- Werkzeug==0.16.1
 
 ## Infraestructura de prueba
 
@@ -124,14 +124,14 @@ pip install -r requirements.txt
 - Setear variables de entorno en la CLI, teniendo en cuenta la uybicación del archivo app.py
 
 ```bash
-export FLASK_APP=run.py
+export FLASK_APP=app.py
 export FLASK_ENV=development
 ```
 
 ### Opción 1
 
 ```bash
-export FLASK_APP=run.py
+export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 ```
@@ -139,7 +139,7 @@ flask run
 ### Opción 2
 
 ```bash
-export FLASK_APP=run.py
+export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run --host localhost --port 3000
 ```
@@ -147,7 +147,7 @@ flask run --host localhost --port 3000
 - Todo en una línea
 
 ```bash
-FLASK_APP=src/run.py FLASK_ENV=development flask run --host localhost --port 3000 --debug
+FLASK_APP=src/app.py FLASK_ENV=development flask run --host localhost --port 3000
 ```
 
 ## Comandos útiles PIP

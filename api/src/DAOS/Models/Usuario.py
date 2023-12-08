@@ -1,6 +1,6 @@
 import datetime
 
-from src.db import db
+from ...app import db
 
 class Usuario(db.Model):
 	idusuario = db.Column(db.Integer, primary_key=True)

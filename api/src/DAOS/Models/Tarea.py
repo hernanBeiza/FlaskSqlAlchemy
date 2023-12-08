@@ -1,6 +1,6 @@
 import datetime
 
-from src.db import db
+from ...app import db
 
 class Tarea(db.Model):
 	idtarea = db.Column(db.Integer, primary_key=True)

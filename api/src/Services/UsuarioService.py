@@ -1,9 +1,18 @@
+from flask import request
+from flask import escape
+from flask import json
+from flask import jsonify
+from flask import Blueprint
+
 from termcolor import colored
 
-from src.DAOS.Schemas.UsuarioSchema import UsuarioSchema
-from src.DAOS.UsuarioDAO import UsuarioDAO
+from ..app import db
 
-from src.Services.VOS.UsuarioVO import UsuarioVO
+from ..DAOS.Models.Usuario import Usuario
+from ..DAOS.Schemas.UsuarioSchema import UsuarioSchema
+from ..DAOS.UsuarioDAO import UsuarioDAO
+
+from .VOS.UsuarioVO import UsuarioVO
 
 class UsuarioService():
 
@@ -44,30 +53,14 @@ class UsuarioService():
 				usuario = UsuarioSchema().dump(respuesta["usuario"])
 				respuesta["usuario"] = usuario
 		else:
-			respuesta = {"result": False, "errores": mensajes}
+			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
 
 	@staticmethod
-	def obtener():
-		usuarios = UsuarioDAO.obtener()
-		respuesta = {}
-		if len(usuarios) > 0:
-			respuesta["usuarios"] = UsuarioSchema(many=True).dump(usuarios)
-
-	@staticmethod
-	def obtenerPaginado(pagina):
-		usuarios = UsuarioDAO.obtenerPaginado(pagina)
-		if len(usuarios) > 0:
-			return {
-				"result": True,
-				"usuarios": UsuarioSchema(many=True).dump(usuarios),
-				"mensajes": "Se encontraron usuarios para la página {}".format(pagina)
-			}
-		else:
-			return {
-				"result": False,
-				"errores": 'No se encontraron usuarios en la página {}'.format(pagina)
-			}
+	def obtener(pagina):
+		respuesta = UsuarioDAO.obtener(pagina)
+		if(respuesta["result"]):
+			respuesta["usuarios"] = UsuarioSchema(many=True).dump(respuesta["usuarios"])
 
 	@staticmethod
 	def obtenerConID(idUsuario):
@@ -82,7 +75,7 @@ class UsuarioService():
 		else:
 			return {
 				"result": False,
-				"errores": "No se encontró usuario con id {}".format(idUsuario)
+				"mensajes": "No se encontró usuario con id {}".format(idUsuario)
 			}
 
 	@staticmethod
@@ -129,7 +122,7 @@ class UsuarioService():
 				usuario = UsuarioSchema().dump(respuesta["usuario"])
 				respuesta["usuario"] = usuario
 		else:
-			respuesta={"result":False,"errores":mensajes}
+			respuesta = {"result":False, "errores":mensajes}
 		return respuesta
 
 	@staticmethod
