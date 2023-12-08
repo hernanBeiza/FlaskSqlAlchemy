@@ -1,6 +1,6 @@
-from ...app import ma
+from src.ma import ma
 from marshmallow import Schema, fields
-from ..Models.Tarea import Tarea
+from src.DAOS.Models.Tarea import Tarea
 
 #Forma manual
 """

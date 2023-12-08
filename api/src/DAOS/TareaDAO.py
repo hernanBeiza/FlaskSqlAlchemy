@@ -1,9 +1,9 @@
 from termcolor import colored
 
-from ..app import db
+from src.db import db
 
-from ..DAOS.Models.Tarea import Tarea
-from ..DAOS.Schemas.TareaSchema import TareaSchema
+from src.DAOS.Models.Tarea import Tarea
+from src.DAOS.Schemas.TareaSchema import TareaSchema
 
 class TareaDAO():
 
@@ -25,13 +25,13 @@ class TareaDAO():
 			#usuario = Usuario.query.get(usuario.idusuario)
 			respuesta = {"result":result,"mensajes":mensajes, "tarea":tarea}
 		except Exception as e:
-			print (e)
+			print(e)
 			#log your exception in the way you want -> log to file, log as error with default logging, send by email. It's upon you
 			db.session.rollback()
 			# for resetting non-commited .add()
 			db.session.flush()
-			result=False
-			mensajes="La tarea no se pudo guardar"
+			result = False
+			mensajes = "La tarea no se pudo guardar"
 			respuesta = {"result":result,"errores":mensajes}
 		return respuesta
 
@@ -96,11 +96,11 @@ class TareaDAO():
 				db.session.rollback()
 				# for resetting non-commited .add()
 				db.session.flush()
-				result=False
-				mensajes="La tarea con id {} no se pudo eliminar".format(idTarea)
+				result = False
+				mensajes = "La tarea con id {} no se pudo eliminar".format(idTarea)
 		else:
-			result=False
-			mensajes="La tarea con id {} no se ha podido encontrar".format(idTarea)
+			result = False
+			mensajes = "La tarea con id {} no se ha podido encontrar".format(idTarea)
 
 		respuesta = {"result":result,"errores":mensajes}
 		return respuesta
